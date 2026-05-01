@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mahi Verma — AI Engineer &amp; Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Outfit:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#080806;--bg2:#0e0d09;--bg3:#141208;--bg4:#1a1710;
+  --gold:#c8a97e;--gold2:#e8c99e;--gold3:#8a6a3e;
+  --gdim:rgba(200,169,126,.08);--gbord:rgba(200,169,126,.18);
+  --white:#f0ebe3;--muted:rgba(240,235,227,.48);--muted2:rgba(240,235,227,.28);
+  --line:rgba(200,169,126,.1);
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Outfit',sans-serif;
+  --mono:'JetBrains Mono',monospace;
+  --ease:cubic-bezier(.16,1,.3,1)
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--white);font-family:var(--sans);font-size:16px;line-height:1.7;overflow-x:hidden;cursor:none}
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold3);border-radius:2px}
+
+/* CURSOR */
+#cursor{position:fixed;top:0;left:0;z-index:9999;pointer-events:none}
+.c-dot{position:absolute;width:7px;height:7px;background:var(--gold);border-radius:50%;transform:translate(-50%,-50%);transition:width .25s var(--ease),height .25s var(--ease)}
+.c-ring{position:absolute;width:34px;height:34px;border:1px solid rgba(200,169,126,.4);border-radius:50%;transform:translate(-50%,-50%);transition:width .4s var(--ease),height .4s var(--ease)}
+body.hov .c-dot{width:11px;height:11px}
+body.hov .c-ring{width:50px;height:50px}
+
+/* NOISE + GRID */
+body::after{content:'';position:fixed;inset:0;z-index:1;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:.025;pointer-events:none}
+body::before{content:'';position:fixed;inset:0;z-index:0;pointer-events:none;background-image:linear-gradient(rgba(200,169,126,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(200,169,126,.018) 1px,transparent 1px);background-size:80px 80px}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:flex-end;padding:26px 64px;transition:padding .4s var(--ease),background .4s,border-color .4s;border-bottom:1px solid transparent}
+nav.scrolled{padding:16px 64px;background:rgba(8,8,6,.9);backdrop-filter:blur(24px);border-bottom-color:var(--line)}
+.nav-links{display:flex;align-items:center;gap:36px;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;transition:color .3s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--gold);transition:width .35s var(--ease)}
+.nav-links a:hover,.nav-links a.active{color:var(--gold)}
+.nav-links a:hover::after,.nav-links a.active::after{width:100%}
+.nav-cta{padding:9px 22px!important;border:1px solid var(--gbord)!important;border-radius:3px;color:var(--gold)!important;transition:background .3s,color .3s!important}
+.nav-cta:hover{background:var(--gold)!important;color:var(--bg)!important}
+.nav-cta::after{display:none!important}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px}
+.hamburger span{width:22px;height:1px;background:var(--gold);display:block;transition:.3s var(--ease)}
+.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;inset:0;z-index:190;background:rgba(8,8,6,.97);backdrop-filter:blur(20px);flex-direction:column;align-items:center;justify-content:center;gap:28px}
+.mobile-menu.open{display:flex}
+.mobile-menu a{font-family:var(--serif);font-size:2.2rem;font-weight:400;color:var(--white);text-decoration:none;transition:color .3s;opacity:0;transform:translateY(20px)}
+.mobile-menu.open a{animation:fadeUp .5s var(--ease) forwards}
+.mobile-menu.open a:nth-child(1){animation-delay:.05s}
+.mobile-menu.open a:nth-child(2){animation-delay:.1s}
+.mobile-menu.open a:nth-child(3){animation-delay:.15s}
+.mobile-menu.open a:nth-child(4){animation-delay:.2s}
+.mobile-menu.open a:nth-child(5){animation-delay:.25s}
+.mobile-menu.open a:nth-child(6){animation-delay:.3s}
+.mobile-menu a:hover{color:var(--gold)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 64px;position:relative;overflow:hidden;z-index:2}
+.hero-glow{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 70% 55% at 75% 45%,rgba(200,169,126,.055) 0%,transparent 60%),radial-gradient(ellipse 50% 40% at 15% 70%,rgba(200,169,126,.03) 0%,transparent 50%)}
+.hero-chip{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);border:1px solid var(--gbord);border-radius:50px;padding:7px 18px;background:var(--gdim);margin-bottom:32px;width:fit-content;opacity:0;transform:translateY(16px);animation:fadeUp .7s .3s var(--ease) forwards}
+.hero-chip::before{content:'';width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0;box-shadow:0 0 8px var(--gold);animation:pulse 2s infinite}
+.hero-name{font-family:var(--serif);font-size:clamp(3.8rem,10vw,9.5rem);font-weight:500;line-height:.95;letter-spacing:-.02em;opacity:0;transform:translateY(40px);animation:fadeUp .95s .5s var(--ease) forwards}
+.hero-name .line2{font-style:italic;font-weight:400;background:linear-gradient(135deg,var(--gold) 0%,var(--gold2) 50%,var(--gold3) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{margin-top:36px;max-width:460px;font-size:1rem;font-weight:300;color:var(--muted);line-height:1.85;opacity:0;transform:translateY(20px);animation:fadeUp .7s .8s var(--ease) forwards}
+.hero-ctas{margin-top:44px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;opacity:0;transform:translateY(16px);animation:fadeUp .7s 1s var(--ease) forwards}
+.btn-p{display:inline-flex;align-items:center;gap:10px;padding:13px 32px;background:var(--gold);color:var(--bg);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;text-decoration:none;border-radius:3px;transition:transform .3s var(--ease),box-shadow .3s,background .3s;border:1px solid var(--gold)}
+.btn-p:hover{background:var(--gold2);transform:translateY(-2px);box-shadow:0 12px 40px rgba(200,169,126,.25)}
+.btn-g{display:inline-flex;align-items:center;gap:10px;padding:13px 28px;border:1px solid var(--gbord);color:var(--muted);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;font-weight:500;text-decoration:none;border-radius:3px;transition:border-color .3s,color .3s,background .3s}
+.btn-g:hover{border-color:var(--gold);color:var(--gold);background:var(--gdim)}
+.hero-scroll-ind{position:absolute;bottom:40px;left:64px;display:flex;align-items:center;gap:14px;font-family:var(--mono);font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted2);opacity:0;animation:fadeIn .8s 1.6s forwards}
+.scroll-bar{width:1px;height:48px;background:linear-gradient(to bottom,var(--gold),transparent);animation:scrollAnim 2s 2s infinite}
+.hero-stats{position:absolute;right:64px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:28px;opacity:0;animation:fadeIn .8s 1.3s forwards}
+.stat-item{text-align:right}
+.stat-n{font-family:var(--serif);font-size:2.2rem;font-weight:400;color:var(--gold)}
+.stat-l{font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted2)}
+
+@keyframes pulse{0%,100%{box-shadow:0 0 8px var(--gold)}50%{box-shadow:0 0 18px var(--gold)}}
+@keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes scrollAnim{0%{transform:scaleY(0);transform-origin:top;opacity:1}50%{transform:scaleY(1);transform-origin:top}51%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
+
+/* MARQUEE */
+.marquee-wrap{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;overflow:hidden;background:var(--bg2);position:relative;z-index:2}
+.marquee-inner{display:flex;animation:marq 28s linear infinite;white-space:nowrap}
+.marquee-inner span{font-family:var(--mono);font-size:.72rem;letter-spacing:.15em;color:var(--muted2);padding:0 32px;flex-shrink:0}
+.marquee-inner span b{color:var(--gold);margin:0 8px;font-style:normal}
+@keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* SHARED */
+section{position:relative;z-index:2}
+.s-label{font-family:var(--mono);font-size:.65rem;letter-spacing:.25em;text-transform:uppercase;color:var(--gold);display:flex;align-items:center;gap:14px;margin-bottom:16px}
+.s-label::before{content:'';width:28px;height:1px;background:var(--gold)}
+.s-title{font-family:var(--serif);font-size:clamp(2.2rem,5vw,4rem);font-weight:500;line-height:1.1}
+.s-title em{font-style:italic;color:var(--gold)}
+.rv{opacity:0;transform:translateY(44px);transition:opacity .85s var(--ease),transform .85s var(--ease)}
+.rv.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* SERVICES */
+#services{padding:120px 64px;border-top:1px solid var(--line)}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;margin-top:64px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.svc-card{padding:44px 38px;background:var(--bg2);position:relative;overflow:hidden;cursor:none;transition:background .4s}
+.svc-card::before{content:'';position:absolute;top:0;left:0;width:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:width .45s var(--ease)}
+.svc-card:hover{background:var(--bg3)}
+.svc-card:hover::before{width:100%}
+.svc-n{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;color:var(--gold);margin-bottom:20px;display:block}
+.svc-t{font-family:var(--serif);font-size:1.35rem;font-weight:500;margin-bottom:14px}
+.svc-d{font-size:.83rem;font-weight:300;color:var(--muted);line-height:1.85}
+.svc-tags{margin-top:22px;display:flex;flex-wrap:wrap;gap:7px}
+.tag{font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border:1px solid var(--line);border-radius:2px;color:var(--muted2);transition:border-color .3s,color .3s}
+.svc-card:hover .tag{border-color:var(--gbord);color:var(--muted)}
+
+/* PROJECTS */
+#projects{padding:120px 0;border-top:1px solid var(--line);overflow:hidden}
+.proj-hdr{padding:0 64px;display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:60px;flex-wrap:wrap;gap:20px}
+.proj-nav-btns{display:flex;gap:10px}
+.pn-btn{width:46px;height:46px;border:1px solid var(--line);background:none;color:var(--muted);cursor:none;display:flex;align-items:center;justify-content:center;font-size:1rem;border-radius:3px;transition:border-color .3s,color .3s,background .3s}
+.pn-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gdim)}
+.proj-viewport{overflow:hidden}
+.proj-track{display:flex;gap:24px;padding:8px 64px 24px;transition:transform .75s var(--ease);will-change:transform}
+.proj-card{flex:0 0 500px;background:var(--bg2);border:1px solid var(--line);border-radius:6px;overflow:hidden;cursor:none;transition:transform .45s var(--ease),border-color .45s,box-shadow .45s}
+.proj-card:hover{transform:translateY(-8px);border-color:var(--gbord);box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.proj-vis{height:260px;position:relative;overflow:hidden;background:var(--bg3)}
+.proj-vis svg{width:100%;height:100%;transition:transform .6s var(--ease)}
+.proj-card:hover .proj-vis svg{transform:scale(1.04)}
+.proj-badge{position:absolute;top:16px;left:16px;z-index:2;font-family:var(--mono);font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;padding:5px 12px;border-radius:2px;background:rgba(200,169,126,.12);color:var(--gold);border:1px solid rgba(200,169,126,.22)}
+.proj-body{padding:32px}
+.proj-num{font-family:var(--mono);font-size:.58rem;letter-spacing:.2em;color:var(--gold);display:block;margin-bottom:10px}
+.proj-t{font-family:var(--serif);font-size:1.5rem;font-weight:500;line-height:1.2;margin-bottom:12px}
+.proj-d{font-size:.82rem;font-weight:300;color:var(--muted);line-height:1.85;margin-bottom:22px}
+.proj-tech{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:26px}
+.proj-tech span{font-family:var(--mono);font-size:.6rem;letter-spacing:.08em;padding:3px 10px;background:var(--gdim);color:var(--gold);border-radius:2px}
+.proj-lnk{display:inline-flex;align-items:center;gap:9px;font-size:.73rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);text-decoration:none;transition:gap .3s var(--ease)}
+.proj-lnk:hover{gap:15px}
+.proj-dots{display:flex;justify-content:center;gap:8px;margin-top:36px}
+.pdot{width:6px;height:6px;border-radius:50%;background:var(--line);cursor:none;transition:background .3s,width .35s var(--ease)}
+.pdot.active{background:var(--gold);width:22px;border-radius:3px}
+
+/* ══════════════════════════════════════
+   AI SERVICES SHOWCASE
+══════════════════════════════════════ */
+#demo{padding:120px 64px;border-top:1px solid var(--line);background:var(--bg2)}
+
+.showcase-hdr{margin-bottom:56px}
+.showcase-hdr p{margin-top:16px;font-size:.92rem;font-weight:300;color:var(--muted);max-width:560px;line-height:1.85}
+
+/* Category switcher */
+.cat-switch{display:flex;margin-top:44px;border:1px solid var(--line);border-radius:5px;overflow:hidden;width:fit-content}
+.cat-btn{padding:13px 40px;background:none;border:none;cursor:none;font-family:var(--sans);font-size:.78rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:background .35s,color .35s;border-right:1px solid var(--line)}
+.cat-btn:last-child{border-right:none}
+.cat-btn.on{background:var(--gold);color:var(--bg)}
+.cat-btn:hover:not(.on){color:var(--white);background:var(--gdim)}
+
+/* Showcase grid */
+.showcase-grid{display:none;margin-top:52px;grid-template-columns:repeat(3,1fr);gap:22px}
+.showcase-grid.on{display:grid}
+
+/* Service card */
+.sv-card{background:var(--bg3);border:1px solid var(--line);border-radius:8px;overflow:hidden;transition:transform .4s var(--ease),border-color .4s,box-shadow .4s;cursor:none}
+.sv-card:hover{transform:translateY(-7px);border-color:var(--gbord);box-shadow:0 22px 55px rgba(0,0,0,.55)}
+
+/* Preview window */
+.sv-preview{height:210px;background:var(--bg4);border-bottom:1px solid var(--line);overflow:hidden;position:relative}
+
+/* Chat bubbles */
+.chat-w{padding:14px 16px;display:flex;flex-direction:column;gap:9px;height:100%;overflow:hidden}
+.cm{display:flex;align-items:flex-end;gap:7px;opacity:0;transform:translateY(7px);transition:opacity .45s,transform .45s}
+.cm.show{opacity:1;transform:translateY(0)}
+.cm-av{width:22px;height:22px;border-radius:50%;background:var(--gdim);border:1px solid var(--gbord);display:flex;align-items:center;justify-content:center;font-size:.55rem;flex-shrink:0}
+.cm-bub{padding:8px 12px;border-radius:11px;font-size:.7rem;font-weight:300;line-height:1.5;max-width:82%}
+.cm-bot .cm-bub{background:rgba(200,169,126,.12);border:1px solid rgba(200,169,126,.2);color:var(--white);border-bottom-left-radius:2px}
+.cm-usr{flex-direction:row-reverse}
+.cm-usr .cm-bub{background:rgba(200,169,126,.25);color:var(--white);border-bottom-right-radius:2px}
+.cm-typing .cm-bub{background:rgba(200,169,126,.08);border:1px solid rgba(200,169,126,.15);display:flex;align-items:center;gap:3px;padding:10px 14px}
+.cm-typing .cm-bub span{width:4px;height:4px;border-radius:50%;background:var(--gold);animation:td 1.1s infinite}
+.cm-typing .cm-bub span:nth-child(2){animation-delay:.18s}
+.cm-typing .cm-bub span:nth-child(3){animation-delay:.36s}
+@keyframes td{0%,80%,100%{transform:scale(.55);opacity:.4}40%{transform:scale(1);opacity:1}}
+
+/* Flow diagram */
+.flow-w{padding:18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;height:100%}
+.fl-node{padding:8px 20px;border:1px solid var(--gbord);border-radius:4px;background:var(--gdim);font-family:var(--mono);font-size:.62rem;letter-spacing:.06em;color:var(--white);text-align:center;white-space:nowrap}
+.fl-node.trig{border-color:rgba(200,169,126,.5);background:rgba(200,169,126,.15);color:var(--gold)}
+.fl-node.out{border-color:rgba(34,197,94,.4);background:rgba(34,197,94,.07);color:#86efac}
+.fl-arr{width:1px;height:16px;background:linear-gradient(to bottom,var(--gold),rgba(200,169,126,.25));margin:0 auto;position:relative}
+.fl-arr::after{content:'▼';position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);font-size:.4rem;color:var(--gold);opacity:.7}
+.fl-pulse{animation:flp 2.2s ease-in-out infinite}
+@keyframes flp{0%,100%{opacity:.35}55%{opacity:1}}
+
+/* Card body */
+.sv-body{padding:22px 24px 24px}
+.sv-icon{font-size:1.3rem;margin-bottom:10px;display:block}
+.sv-title{font-family:var(--serif);font-size:1.12rem;font-weight:500;line-height:1.25;margin-bottom:8px}
+.sv-desc{font-size:.77rem;font-weight:300;color:var(--muted);line-height:1.75;margin-bottom:18px}
+
+/* THE CTA */
+.sv-cta{display:flex;align-items:center;justify-content:space-between;padding:11px 18px;background:linear-gradient(135deg,var(--gold),var(--gold2));border-radius:4px;border:none;cursor:none;width:100%;transition:transform .3s var(--ease),box-shadow .3s}
+.sv-cta:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(200,169,126,.3)}
+.sv-cta-txt{font-family:var(--sans);font-size:.74rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--bg)}
+.sv-cta-arrow{font-size:1rem;color:var(--bg);transition:transform .3s var(--ease)}
+.sv-cta:hover .sv-cta-arrow{transform:translateX(4px)}
+
+/* Custom card */
+.sv-custom{background:linear-gradient(135deg,rgba(200,169,126,.07),rgba(200,169,126,.02));border:1px dashed rgba(200,169,126,.3);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:36px 28px;cursor:none;transition:border-color .4s,background .4s}
+.sv-custom:hover{border-color:rgba(200,169,126,.5);background:rgba(200,169,126,.06)}
+.sv-custom-icon{font-size:2rem;margin-bottom:14px}
+.sv-custom-t{font-family:var(--serif);font-size:1.3rem;font-weight:500;line-height:1.3;margin-bottom:10px}
+.sv-custom-t em{font-style:italic;color:var(--gold)}
+.sv-custom-p{font-size:.78rem;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:22px}
+
+/* ══════════════════════════════════════
+   LEAD MODAL
+══════════════════════════════════════ */
+.modal-ov{position:fixed;inset:0;z-index:2000;background:rgba(4,4,3,.88);backdrop-filter:blur(18px);display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .4s var(--ease)}
+.modal-ov.open{opacity:1;pointer-events:all}
+.modal-box{background:var(--bg2);border:1px solid var(--gbord);border-radius:10px;width:100%;max-width:500px;overflow:hidden;transform:translateY(28px) scale(.97);transition:transform .45s var(--ease);position:relative;max-height:90vh;overflow-y:auto}
+.modal-ov.open .modal-box{transform:translateY(0) scale(1)}
+.modal-top{background:var(--bg3);padding:28px 30px 22px;border-bottom:1px solid var(--line)}
+.modal-tag{font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);display:block;margin-bottom:8px}
+.modal-h{font-family:var(--serif);font-size:1.55rem;font-weight:500;line-height:1.2}
+.modal-h em{font-style:italic;color:var(--gold)}
+.modal-svc{margin-top:7px;font-size:.8rem;font-weight:300;color:var(--muted)}
+.modal-svc b{color:var(--gold2)}
+.modal-close{position:absolute;top:18px;right:18px;width:30px;height:30px;border:1px solid var(--line);border-radius:50%;background:none;color:var(--muted);cursor:none;font-size:.9rem;display:flex;align-items:center;justify-content:center;transition:border-color .3s,color .3s}
+.modal-close:hover{border-color:var(--gold);color:var(--gold)}
+.modal-body{padding:26px 30px}
+.mf{margin-bottom:16px}
+.mf label{display:block;font-family:var(--mono);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.mf input,.mf select,.mf textarea{width:100%;background:var(--bg3);border:1px solid var(--line);border-radius:4px;padding:11px 14px;color:var(--white);font-family:var(--sans);font-size:.84rem;font-weight:300;outline:none;transition:border-color .3s;-webkit-appearance:none}
+.mf input:focus,.mf select:focus,.mf textarea:focus{border-color:var(--gbord)}
+.mf input.err{border-color:rgba(239,68,68,.6)}
+.mf select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23c8a97e' stroke-width='1.5' stroke-linecap='round' fill='none'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:none}
+.mf textarea{resize:none;height:72px}
+.mf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.modal-submit{width:100%;padding:14px;background:linear-gradient(135deg,var(--gold),var(--gold2));color:var(--bg);font-family:var(--sans);font-size:.8rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;border:none;border-radius:4px;cursor:none;transition:transform .3s,box-shadow .3s;margin-top:6px}
+.modal-submit:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(200,169,126,.3)}
+.modal-note{margin-top:12px;text-align:center;font-family:var(--mono);font-size:.6rem;color:var(--muted2);letter-spacing:.06em}
+/* Success */
+.modal-success{display:none;padding:52px 30px;text-align:center}
+.modal-success.show{display:block}
+.succ-icon{font-size:2.8rem;margin-bottom:16px}
+.succ-t{font-family:var(--serif);font-size:1.7rem;font-weight:500;margin-bottom:10px}
+.succ-msg{font-size:.88rem;font-weight:300;color:var(--muted);line-height:1.85}
+.succ-msg strong{color:var(--gold2)}
+
+/* EXPERIENCE */
+#experience{padding:120px 64px;border-top:1px solid var(--line)}
+.exp-layout{display:grid;grid-template-columns:1fr 1.6fr;gap:90px;margin-top:60px}
+.exp-sticky{position:sticky;top:110px;align-self:start}
+.exp-sticky p{margin-top:20px;font-size:.88rem;font-weight:300;color:var(--muted);line-height:1.85;max-width:300px}
+.exp-row{padding:36px 0;border-bottom:1px solid var(--line);cursor:none;transition:padding-left .4s var(--ease)}
+.exp-row:first-child{border-top:1px solid var(--line)}
+.exp-row:hover{padding-left:18px}
+.exp-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;flex-wrap:wrap;gap:8px}
+.exp-co{font-family:var(--serif);font-size:1.25rem;font-weight:500}
+.exp-period{font-family:var(--mono);font-size:.62rem;letter-spacing:.14em;color:var(--gold)}
+.exp-role{font-size:.73rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);margin-bottom:12px}
+.exp-desc{font-size:.83rem;font-weight:300;color:var(--muted);line-height:1.8}
+
+/* SKILLS */
+#skills{padding:120px 64px;border-top:1px solid var(--line);background:var(--bg2)}
+.skill-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:60px;border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.skill-g{padding:36px 30px;background:var(--bg2);transition:background .3s}
+.skill-g:hover{background:var(--bg3)}
+.skill-g-t{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.skill-ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.skill-ul li{font-size:.83rem;font-weight:300;color:var(--muted);display:flex;align-items:center;gap:10px;transition:color .3s}
+.skill-ul li::before{content:'';width:4px;height:4px;background:var(--gold);border-radius:50%;flex-shrink:0}
+.skill-g:hover .skill-ul li{color:var(--white)}
+
+/* ABOUT */
+#about{padding:120px 64px;border-top:1px solid var(--line)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;margin-top:60px;align-items:start}
+.about-text p{font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.9;margin-bottom:22px}
+.about-text p strong{color:var(--white);font-weight:500}
+.pull-quote{font-family:var(--serif);font-size:1.55rem;font-weight:400;line-height:1.45;font-style:italic;color:var(--white);border-left:2px solid var(--gold);padding-left:26px;margin:36px 0}
+.edu-card{background:var(--bg2);border:1px solid var(--line);padding:30px;border-radius:4px;margin-bottom:16px;transition:border-color .3s,transform .3s}
+.edu-card:hover{border-color:var(--gbord);transform:translateX(4px)}
+.edu-inst{font-family:var(--serif);font-size:1.1rem;font-weight:500;margin-bottom:6px}
+.edu-deg{font-size:.75rem;color:var(--gold);letter-spacing:.04em;margin-bottom:5px}
+.edu-yr{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;color:var(--muted2)}
+.status-card{margin-top:24px;padding:28px 30px;background:var(--bg2);border:1px solid var(--line);border-radius:4px}
+.status-card-t{font-family:var(--mono);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.srow{display:flex;align-items:center;gap:12px;padding:7px 0}
+.srow span{font-size:.83rem;font-weight:300;color:var(--muted)}
+.dot-g{width:7px;height:7px;border-radius:50%;background:#22c55e;box-shadow:0 0 8px rgba(34,197,94,.6);flex-shrink:0}
+.dot-c{width:7px;height:7px;border-radius:50%;background:var(--gold);flex-shrink:0}
+
+/* CONTACT */
+#contact{padding:130px 64px;border-top:1px solid var(--line);text-align:center;position:relative;overflow:hidden}
+.contact-glow{position:absolute;width:700px;height:700px;background:radial-gradient(circle,rgba(200,169,126,.04) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none}
+.contact-t{font-family:var(--serif);font-size:clamp(2.8rem,7vw,6rem);font-weight:500;line-height:1;margin-bottom:20px;letter-spacing:-.02em;position:relative;z-index:1}
+.contact-t em{font-style:italic;color:var(--gold)}
+.contact-sub{font-size:.92rem;font-weight:300;color:var(--muted);max-width:360px;margin:0 auto 48px;position:relative;z-index:1}
+.contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;z-index:1}
+.c-link{display:flex;align-items:center;gap:9px;padding:13px 28px;border:1px solid var(--line);color:var(--muted);text-decoration:none;font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;border-radius:3px;transition:border-color .3s,color .3s,background .3s}
+.c-link:hover{border-color:var(--gold);color:var(--gold);background:var(--gdim)}
+
+/* FOOTER */
+footer{padding:28px 64px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+footer p{font-family:var(--mono);font-size:.6rem;letter-spacing:.15em;color:var(--muted2)}
+footer span{color:var(--gold)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  nav,nav.scrolled{padding-left:36px;padding-right:36px}
+  #hero{padding:0 36px}
+  .hero-stats{display:none}
+  .hero-scroll-ind{left:36px}
+  #services,#experience,#skills,#about,#contact,footer,#demo{padding-left:36px;padding-right:36px}
+  .proj-hdr,.proj-track{padding-left:36px!important;padding-right:36px!important}
+  .svc-grid{grid-template-columns:1fr 1fr}
+  .exp-layout{grid-template-columns:1fr;gap:40px}
+  .exp-sticky{position:static}
+  .about-grid{grid-template-columns:1fr}
+  .showcase-grid{grid-template-columns:1fr 1fr}
+  .cat-switch{width:100%}
+  .cat-btn{flex:1}
+}
+@media(max-width:768px){
+  .nav-links{display:none}
+  .hamburger{display:flex}
+  nav,nav.scrolled{padding:18px 24px;justify-content:flex-end}
+  #hero{padding:110px 24px 60px;min-height:auto}
+  .hero-scroll-ind{display:none}
+  #services,#experience,#skills,#about,#contact,#demo,footer{padding-left:24px;padding-right:24px}
+  #services,#experience,#skills,#about,#contact,#demo{padding-top:72px;padding-bottom:72px}
+  .proj-hdr,.proj-track{padding-left:24px!important;padding-right:24px!important}
+  .svc-grid{grid-template-columns:1fr}
+  .skill-grid{grid-template-columns:1fr 1fr}
+  .proj-card{flex:0 0 300px}
+  .proj-vis{height:180px}
+  footer{flex-direction:column;text-align:center}
+  .contact-links{flex-direction:column;align-items:center}
+  .showcase-grid{grid-template-columns:1fr}
+  .mf-row{grid-template-columns:1fr}
+  .cat-switch{flex-direction:column;width:100%}
+  .cat-btn{border-right:none;border-bottom:1px solid var(--line)}
+  .cat-btn:last-child{border-bottom:none}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor"><div class="c-ring" id="cRing"></div><div class="c-dot" id="cDot"></div></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#projects">Work</a></li>
+    <li><a href="#demo">AI Products</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="#contact" class="nav-cta">Hire Me</a></li>
+  </ul>
+  <button class="hamburger" id="ham"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobMenu">
+  <a href="#services" class="ml">Services</a>
+  <a href="#projects" class="ml">Work</a>
+  <a href="#demo" class="ml">AI Products</a>
+  <a href="#experience" class="ml">Experience</a>
+  <a href="#about" class="ml">About</a>
+  <a href="#contact" class="ml">Contact</a>
+</div>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-chip">Available for projects</div>
+  <h1 class="hero-name">Mahi<br><span class="line2">Verma</span></h1>
+  <p class="hero-desc">I build intelligent systems and digital products — from LLM-powered automation to production web apps. One-person agency. Full capability.</p>
+  <div class="hero-ctas">
+    <a href="#projects" class="btn-p">View My Work →</a>
+    <a href="#demo" class="btn-g">See AI Products ↓</a>
+    <a href="#contact" class="btn-g">Let's Talk →</a>
+  </div>
+  <div class="hero-scroll-ind"><div class="scroll-bar"></div>Scroll</div>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-n">2+</div><div class="stat-l">Yrs Experience</div></div>
+    <div class="stat-item"><div class="stat-n">AI</div><div class="stat-l">Specialization</div></div>
+    <div class="stat-item"><div class="stat-n">∞</div><div class="stat-l">Problems Solved</div></div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span>LangChain<b>✦</b>TensorFlow<b>✦</b>Python<b>✦</b>LLM Automation<b>✦</b>RAG Systems<b>✦</b>ChromaDB<b>✦</b>Deep Learning<b>✦</b>Full-Stack<b>✦</b>Docker<b>✦</b>AWS<b>✦</b>Streamlit<b>✦</b>CNN</span>
+    <span>LangChain<b>✦</b>TensorFlow<b>✦</b>Python<b>✦</b>LLM Automation<b>✦</b>RAG Systems<b>✦</b>ChromaDB<b>✦</b>Deep Learning<b>✦</b>Full-Stack<b>✦</b>Docker<b>✦</b>AWS<b>✦</b>Streamlit<b>✦</b>CNN</span>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="s-label rv">What I Do</div>
+  <h2 class="s-title rv d1">Services built for<br><em>real results</em></h2>
+  <div class="svc-grid">
+    <div class="svc-card rv d1"><span class="svc-n">01</span><h3 class="svc-t">AI &amp; LLM Applications</h3><p class="svc-d">Custom AI tools powered by large language models — chatbots, document processors, email generators, RAG pipelines. Production-ready, not just demos.</p><div class="svc-tags"><span class="tag">LangChain</span><span class="tag">Groq/GPT</span><span class="tag">RAG</span><span class="tag">ChromaDB</span></div></div>
+    <div class="svc-card rv d2"><span class="svc-n">02</span><h3 class="svc-t">ML &amp; Deep Learning</h3><p class="svc-d">End-to-end ML pipelines from raw data to deployed model. Classification, audio analysis, NLP, computer vision — rigorous and reproducible.</p><div class="svc-tags"><span class="tag">TensorFlow</span><span class="tag">Scikit-learn</span><span class="tag">CNN</span><span class="tag">NLP</span></div></div>
+    <div class="svc-card rv d3"><span class="svc-n">03</span><h3 class="svc-t">Web Development</h3><p class="svc-d">Performant, responsive full-stack apps. From landing pages to complete platforms — fast to ship, built to scale.</p><div class="svc-tags"><span class="tag">React</span><span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Streamlit</span></div></div>
+    <div class="svc-card rv d1"><span class="svc-n">04</span><h3 class="svc-t">Data Pipelines &amp; Analytics</h3><p class="svc-d">Transform raw data into decisions. ETL pipelines, dashboards, and analytics that give you real clarity.</p><div class="svc-tags"><span class="tag">Pandas</span><span class="tag">PostgreSQL</span><span class="tag">Big Data</span></div></div>
+    <div class="svc-card rv d2"><span class="svc-n">05</span><h3 class="svc-t">AI Automation</h3><p class="svc-d">Automate repetitive workflows with AI. Connect your tools with smart pipelines that save hours every week.</p><div class="svc-tags"><span class="tag">API Integration</span><span class="tag">Bash</span><span class="tag">Docker</span></div></div>
+    <div class="svc-card rv d3"><span class="svc-n">06</span><h3 class="svc-t">Technical Consulting</h3><p class="svc-d">Not sure what you need? I'll audit your stack and chart the clearest path to your technical goals — with a concrete plan.</p><div class="svc-tags"><span class="tag">Strategy</span><span class="tag">Architecture</span><span class="tag">ML Ops</span></div></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="proj-hdr">
+    <div><div class="s-label rv">Featured Work</div><h2 class="s-title rv d1">Projects that<br><em>prove the work</em></h2></div>
+    <div class="proj-nav-btns rv d2"><button class="pn-btn" id="pPrev">←</button><button class="pn-btn" id="pNext">→</button></div>
+  </div>
+  <div class="proj-viewport">
+    <div class="proj-track" id="pTrack">
+      <!-- Card 1 -->
+      <div class="proj-card">
+        <div class="proj-vis" style="background:linear-gradient(135deg,#100d04,#1a1408)">
+          <svg viewBox="0 0 500 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="70" y="50" width="360" height="170" rx="5" fill="rgba(200,169,126,.04)" stroke="rgba(200,169,126,.15)" stroke-width="1"/>
+            <rect x="70" y="50" width="360" height="36" rx="5" fill="rgba(200,169,126,.07)"/>
+            <text x="90" y="73" fill="rgba(200,169,126,.55)" font-family="monospace" font-size="10">SUBJECT: Re: Exciting Opportunity at...</text>
+            <rect x="90" y="105" width="270" height="5" rx="3" fill="rgba(200,169,126,.1)"/>
+            <rect x="90" y="120" width="230" height="5" rx="3" fill="rgba(200,169,126,.08)"/>
+            <rect x="90" y="135" width="250" height="5" rx="3" fill="rgba(200,169,126,.07)"/>
+            <rect x="90" y="150" width="200" height="5" rx="3" fill="rgba(200,169,126,.06)"/>
+            <rect x="90" y="175" width="100" height="22" rx="3" fill="rgba(200,169,126,.14)" stroke="rgba(200,169,126,.3)" stroke-width="1"/>
+            <text x="103" y="190" fill="rgba(200,169,126,.8)" font-family="monospace" font-size="8">GENERATE →</text>
+            <circle cx="310" cy="133" r="3" fill="rgba(200,169,126,.6)"><animate attributeName="opacity" values="0;1;0" dur="1.4s" begin="0s" repeatCount="indefinite"/></circle>
+            <circle cx="322" cy="133" r="3" fill="rgba(200,169,126,.6)"><animate attributeName="opacity" values="0;1;0" dur="1.4s" begin=".25s" repeatCount="indefinite"/></circle>
+            <circle cx="334" cy="133" r="3" fill="rgba(200,169,126,.6)"><animate attributeName="opacity" values="0;1;0" dur="1.4s" begin=".5s" repeatCount="indefinite"/></circle>
+          </svg>
+          <div class="proj-badge">Generative AI</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-num">01 / 03</span>
+          <h3 class="proj-t">AI Cold Email Generator</h3>
+          <p class="proj-d">LLM app that scrapes job listings, extracts skills, and generates hyper-personalized cold emails using vector-matched portfolio data.</p>
+          <div class="proj-tech"><span>LangChain</span><span>Groq LLM</span><span>ChromaDB</span><span>Streamlit</span><span>ONNX</span></div>
+          <a href="#demo" class="proj-lnk">See More →</a>
+        </div>
+      </div>
+      <!-- Card 2 -->
+      <div class="proj-card">
+        <div class="proj-vis" style="background:linear-gradient(135deg,#060e0a,#0a1a10)">
+          <svg viewBox="0 0 500 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <text x="55" y="58" fill="rgba(200,169,126,.4)" font-family="monospace" font-size="8">STFT SPECTROGRAM — FOREST AUDIO</text>
+            <rect x="55" y="72" width="7" height="95" rx="1" fill="rgba(200,169,126,.15)"/>
+            <rect x="66" y="60" width="7" height="107" rx="1" fill="rgba(200,169,126,.28)"/>
+            <rect x="77" y="50" width="7" height="117" rx="1" fill="rgba(200,169,126,.45)"/>
+            <rect x="88" y="42" width="7" height="125" rx="1" fill="rgba(200,169,126,.65)"/>
+            <rect x="99" y="36" width="7" height="131" rx="1" fill="rgba(200,169,126,.85)"/>
+            <rect x="110" y="54" width="7" height="113" rx="1" fill="rgba(200,169,126,.6)"/>
+            <rect x="121" y="70" width="7" height="97" rx="1" fill="rgba(200,169,126,.38)"/>
+            <rect x="132" y="80" width="7" height="87" rx="1" fill="rgba(200,169,126,.24)"/>
+            <rect x="143" y="75" width="7" height="92" rx="1" fill="rgba(200,169,126,.32)"/>
+            <rect x="154" y="57" width="7" height="110" rx="1" fill="rgba(200,169,126,.52)"/>
+            <rect x="165" y="40" width="7" height="127" rx="1" fill="rgba(200,169,126,.78)"/>
+            <rect x="176" y="33" width="7" height="134" rx="1" fill="rgba(200,169,126,1)"/>
+            <rect x="187" y="53" width="7" height="114" rx="1" fill="rgba(200,169,126,.62)"/>
+            <rect x="198" y="67" width="7" height="100" rx="1" fill="rgba(200,169,126,.42)"/>
+            <rect x="209" y="78" width="7" height="89" rx="1" fill="rgba(200,169,126,.27)"/>
+            <rect x="220" y="83" width="7" height="84" rx="1" fill="rgba(200,169,126,.2)"/>
+            <rect x="231" y="75" width="7" height="92" rx="1" fill="rgba(200,169,126,.3)"/>
+            <rect x="242" y="55" width="7" height="112" rx="1" fill="rgba(200,169,126,.52)"/>
+            <rect x="253" y="39" width="7" height="128" rx="1" fill="rgba(200,169,126,.8)"/>
+            <rect x="264" y="32" width="7" height="135" rx="1" fill="rgba(200,169,126,1)"/>
+            <rect x="275" y="52" width="7" height="115" rx="1" fill="rgba(200,169,126,.64)"/>
+            <rect x="286" y="66" width="7" height="101" rx="1" fill="rgba(200,169,126,.44)"/>
+            <rect x="297" y="80" width="7" height="87" rx="1" fill="rgba(200,169,126,.28)"/>
+            <line x1="55" y1="180" x2="430" y2="180" stroke="rgba(200,169,126,.18)" stroke-width="1"/>
+            <line x1="55" y1="72" x2="55" y2="180" stroke="rgba(200,169,126,.8)" stroke-width="1.5">
+              <animate attributeName="x1" values="55;430;55" dur="4.5s" repeatCount="indefinite"/>
+              <animate attributeName="x2" values="55;430;55" dur="4.5s" repeatCount="indefinite"/>
+            </line>
+            <rect x="60" y="205" width="78" height="15" rx="3" fill="rgba(200,169,126,.1)">
+              <animate attributeName="opacity" values="0;1;0" dur="3s" repeatCount="indefinite"/>
+            </rect>
+            <text x="65" y="216" fill="rgba(200,169,126,.8)" font-family="monospace" font-size="7.5">CAPUCHIN ✓</text>
+          </svg>
+          <div class="proj-badge">Deep Learning</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-num">02 / 03</span>
+          <h3 class="proj-t">Bird Call Audio Classifier</h3>
+          <p class="proj-d">CNN pipeline detecting Capuchin bird calls from raw forest audio using STFT spectrograms and sliding-window inference.</p>
+          <div class="proj-tech"><span>TensorFlow</span><span>STFT</span><span>CNN</span><span>TF I/O</span><span>NumPy</span></div>
+          <a href="#contact" class="proj-lnk">Discuss Project →</a>
+        </div>
+      </div>
+      <!-- Card 3 -->
+      <div class="proj-card">
+        <div class="proj-vis" style="background:linear-gradient(135deg,#0c0a10,#120e18)">
+          <svg viewBox="0 0 500 260" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="55" y="35" width="390" height="190" rx="6" fill="rgba(200,169,126,.03)" stroke="rgba(200,169,126,.12)" stroke-width="1"/>
+            <rect x="55" y="35" width="390" height="28" rx="6" fill="rgba(200,169,126,.07)"/>
+            <circle cx="76" cy="49" r="5" fill="rgba(239,68,68,.5)"/>
+            <circle cx="93" cy="49" r="5" fill="rgba(245,158,11,.5)"/>
+            <circle cx="110" cy="49" r="5" fill="rgba(34,197,94,.5)"/>
+            <rect x="130" y="42" width="200" height="13" rx="3" fill="rgba(200,169,126,.06)"/>
+            <rect x="70" y="78" width="155" height="120" rx="3" fill="rgba(200,169,126,.05)" stroke="rgba(200,169,126,.1)" stroke-width="1"/>
+            <rect x="72" y="80" width="151" height="30" rx="2" fill="rgba(200,169,126,.1)"/>
+            <rect x="80" y="86" width="70" height="5" rx="3" fill="rgba(200,169,126,.3)"/>
+            <rect x="80" y="98" width="50" height="4" rx="3" fill="rgba(200,169,126,.2)"/>
+            <rect x="80" y="120" width="120" height="4" rx="3" fill="rgba(200,169,126,.12)"/>
+            <rect x="80" y="132" width="100" height="4" rx="3" fill="rgba(200,169,126,.1)"/>
+            <rect x="80" y="158" width="80" height="20" rx="2" fill="rgba(200,169,126,.15)" stroke="rgba(200,169,126,.3)" stroke-width="1"/>
+            <rect x="240" y="78" width="190" height="52" rx="3" fill="rgba(200,169,126,.05)" stroke="rgba(200,169,126,.1)" stroke-width="1"/>
+            <rect x="252" y="88" width="120" height="4" rx="3" fill="rgba(200,169,126,.2)"/>
+            <rect x="252" y="100" width="160" height="4" rx="2" fill="rgba(200,169,126,.1)"/>
+            <rect x="252" y="112" width="140" height="4" rx="2" fill="rgba(200,169,126,.08)"/>
+            <circle cx="420" cy="49" r="0" fill="none" stroke="rgba(200,169,126,.4)" stroke-width="1"><animate attributeName="r" values="0;12;0" dur="2.2s" repeatCount="indefinite"/></circle>
+            <circle cx="420" cy="49" r="4" fill="rgba(200,169,126,.6)"/>
+          </svg>
+          <div class="proj-badge">Web Dev</div>
+        </div>
+        <div class="proj-body">
+          <span class="proj-num">03 / 03</span>
+          <h3 class="proj-t">Production Web Applications</h3>
+          <p class="proj-d">Full-stack web development with focus on performance, cross-browser compatibility, responsive design, and production deployment.</p>
+          <div class="proj-tech"><span>HTML/CSS/JS</span><span>PHP</span><span>React</span><span>Docker</span><span>AWS</span></div>
+          <a href="#contact" class="proj-lnk">Discuss Project →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="proj-dots" id="pDots">
+    <div class="pdot active" data-i="0"></div>
+    <div class="pdot" data-i="1"></div>
+    <div class="pdot" data-i="2"></div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     AI PRODUCTS & AUTOMATIONS
+══════════════════════════════════════ -->
+<section id="demo">
+
+  <div class="showcase-hdr">
+    <div class="s-label rv">Ready-to-Deploy AI Products</div>
+    <h2 class="s-title rv d1">I build this for<br><em>your business</em></h2>
+    <p class="rv d2">Every product below ships in days, not months. Real AI. Real automation. Deployed, tested, and handed over — yours to run forever. Click any card to get it built.</p>
+    <div class="cat-switch rv d3" id="catSwitch">
+      <button class="cat-btn on" data-cat="chatbots">🤖 &nbsp;AI Chatbots &nbsp;(5)</button>
+      <button class="cat-btn" data-cat="automations">⚡ &nbsp;Workflow Automations &nbsp;(5)</button>
+    </div>
+  </div>
+
+  <!-- ── CHATBOTS ── -->
+  <div class="showcase-grid on" id="cat-chatbots">
+
+    <!-- 1. Customer Support -->
+    <div class="sv-card rv d1">
+      <div class="sv-preview">
+        <div class="chat-w" id="c1">
+          <div class="cm cm-bot"><div class="cm-av">🤖</div><div class="cm-bub">Hi! I'm here 24/7. How can I help you today?</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">My order hasn't arrived yet</div><div class="cm-av">👤</div></div>
+          <div class="cm cm-bot cm-typing"><div class="cm-av">🤖</div><div class="cm-bub"><span></span><span></span><span></span></div></div>
+          <div class="cm cm-bot"><div class="cm-av">🤖</div><div class="cm-bub">Order #8821 ships tomorrow! Delivery: Dec 18 ✅</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">Thanks so much!</div><div class="cm-av">👤</div></div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">🎧</span>
+        <div class="sv-title">Customer Support Chatbot</div>
+        <p class="sv-desc">Handle 90% of support tickets automatically — orders, FAQs, returns, escalation. Your team handles only what truly needs a human.</p>
+        <button class="sv-cta" onclick="openLead('Customer Support Chatbot')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Sales Lead Qualification -->
+    <div class="sv-card rv d2">
+      <div class="sv-preview">
+        <div class="chat-w" id="c2">
+          <div class="cm cm-bot"><div class="cm-av">💼</div><div class="cm-bub">Looking to grow? Let me find the right solution for you.</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">We need better lead generation</div><div class="cm-av">👤</div></div>
+          <div class="cm cm-bot cm-typing"><div class="cm-av">💼</div><div class="cm-bub"><span></span><span></span><span></span></div></div>
+          <div class="cm cm-bot"><div class="cm-av">💼</div><div class="cm-bub">Budget range? This helps me find your best fit.</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">$2k–$5k/month</div><div class="cm-av">👤</div></div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">🎯</span>
+        <div class="sv-title">Sales Lead Qualification Bot</div>
+        <p class="sv-desc">Qualify, score, and route leads automatically. Ask the right questions, filter time-wasters, deliver only hot leads to your sales team.</p>
+        <button class="sv-cta" onclick="openLead('Sales Lead Qualification Bot')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. WhatsApp -->
+    <div class="sv-card rv d3">
+      <div class="sv-preview" style="background:#0a140a">
+        <div class="chat-w" id="c3">
+          <div class="cm cm-bot"><div class="cm-av" style="background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.3)">✅</div><div class="cm-bub" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.22)">Welcome! Reply: 1-Shop 2-Orders 3-Support</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">1</div><div class="cm-av">👤</div></div>
+          <div class="cm cm-bot"><div class="cm-av" style="background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.3)">✅</div><div class="cm-bub" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.22)">🛍️ Summer Dress ₹799 | Jacket ₹1,499 — type to buy!</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">Summer Dress</div><div class="cm-av">👤</div></div>
+          <div class="cm cm-bot"><div class="cm-av" style="background:rgba(37,211,102,.12);border-color:rgba(37,211,102,.3)">✅</div><div class="cm-bub" style="background:rgba(37,211,102,.1);border-color:rgba(37,211,102,.22)">Great pick! 👉 [Pay ₹799] — COD also available</div></div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">💬</span>
+        <div class="sv-title">WhatsApp Business Chatbot</div>
+        <p class="sv-desc">Turn WhatsApp into a full sales and support channel. Product catalog, orders, payments, and customer care — all inside WhatsApp.</p>
+        <button class="sv-cta" onclick="openLead('WhatsApp Business Chatbot')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. Ecommerce Recommendation -->
+    <div class="sv-card rv d1">
+      <div class="sv-preview">
+        <div class="chat-w" id="c4">
+          <div class="cm cm-bot"><div class="cm-av">🛒</div><div class="cm-bub">Tell me what you need and I'll find your perfect match.</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">Running shoes under ₹3k for flat feet</div><div class="cm-av">👤</div></div>
+          <div class="cm cm-bot cm-typing"><div class="cm-av">🛒</div><div class="cm-bub"><span></span><span></span><span></span></div></div>
+          <div class="cm cm-bot"><div class="cm-av">🛒</div><div class="cm-bub">Nike React ₹2,799 — arch support, 4.9★, 847 sold 🔥 Add to cart?</div></div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">🛍️</span>
+        <div class="sv-title">Ecommerce Recommendation Bot</div>
+        <p class="sv-desc">Boost conversions with AI that reads what customers want. Personalized picks, upsells, and guided buying journeys — running 24/7.</p>
+        <button class="sv-cta" onclick="openLead('Ecommerce Product Recommendation Bot')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. Internal KB -->
+    <div class="sv-card rv d2">
+      <div class="sv-preview">
+        <div class="chat-w" id="c5">
+          <div class="cm cm-bot"><div class="cm-av">📚</div><div class="cm-bub">Ask me anything about company policies, docs, or processes.</div></div>
+          <div class="cm cm-usr"><div class="cm-bub">What's the expense reimbursement process?</div><div class="cm-av">👤</div></div>
+          <div class="cm cm-bot cm-typing"><div class="cm-av">📚</div><div class="cm-bub"><span></span><span></span><span></span></div></div>
+          <div class="cm cm-bot"><div class="cm-av">📚</div><div class="cm-bub">Submit to Finance portal within 30 days. Attach receipts + manager approval. [HR Policy v2.4]</div></div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">🏢</span>
+        <div class="sv-title">Internal Knowledge Base Bot</div>
+        <p class="sv-desc">Instant answers from your company docs, SOPs, and wikis. Onboard faster, eliminate repetitive questions, keep knowledge always accessible.</p>
+        <button class="sv-cta" onclick="openLead('Internal Knowledge Base Bot')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Custom CTA card -->
+    <div class="sv-custom rv d3" onclick="openLead('Custom AI Chatbot')">
+      <div class="sv-custom-icon">✨</div>
+      <div class="sv-custom-t">Need a <em>custom</em><br>chatbot?</div>
+      <p class="sv-custom-p">Don't see your exact use case? I build fully custom AI chatbots for any business workflow — from scratch, fast.</p>
+      <button class="sv-cta" style="width:auto;padding:11px 28px">
+        <span class="sv-cta-txt">Tell Me What You Need</span>
+        <span class="sv-cta-arrow">→</span>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- ── AUTOMATIONS ── -->
+  <div class="showcase-grid" id="cat-automations">
+
+    <!-- 1. Lead → CRM -->
+    <div class="sv-card rv d1">
+      <div class="sv-preview">
+        <div class="flow-w">
+          <div class="fl-node trig">🧲 New Lead Fills Form</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">🤖 AI Scores &amp; Tags Lead</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">📊 Auto-Creates CRM Contact</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node out">✅ Sales Team Notified</div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">🧲</span>
+        <div class="sv-title">Lead Capture → CRM Automation</div>
+        <p class="sv-desc">Every new lead instantly scored, tagged, and added to your CRM with full context. Zero manual entry. Zero leads lost.</p>
+        <button class="sv-cta" onclick="openLead('Lead Capture → CRM Automation')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 2. Email Classification -->
+    <div class="sv-card rv d2">
+      <div class="sv-preview">
+        <div class="flow-w">
+          <div class="fl-node trig">📧 Email Arrives in Inbox</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">🧠 AI Reads &amp; Classifies Intent</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">✍️ Drafts Personalized Reply</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node out">📤 Sent or Queued for Review</div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">📧</span>
+        <div class="sv-title">Email Classification + Auto-Reply</div>
+        <p class="sv-desc">AI reads every inbound email, understands the intent, drafts the right reply, and sends it — cutting your response time to minutes.</p>
+        <button class="sv-cta" onclick="openLead('Email Classification & Auto-Reply Automation')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 3. Document Extraction -->
+    <div class="sv-card rv d3">
+      <div class="sv-preview">
+        <div class="flow-w">
+          <div class="fl-node trig">📄 Invoice / Doc Received</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">🔍 AI Extracts Key Fields</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">🗂️ Structured Data Formatted</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node out">✅ Pushed to Sheet / Database</div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">📄</span>
+        <div class="sv-title">Document Data Extraction</div>
+        <p class="sv-desc">Upload invoices, contracts, or forms — AI pulls every key field and pushes it to your sheet, database, or ERP. Zero manual keying.</p>
+        <button class="sv-cta" onclick="openLead('Document Data Extraction Automation')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 4. Appointment + Reminder -->
+    <div class="sv-card rv d1">
+      <div class="sv-preview">
+        <div class="flow-w">
+          <div class="fl-node trig">📅 Client Books Appointment</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">📩 Confirmation Sent Instantly</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">⏰ Smart Reminders: 24hr + 1hr</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node out">✅ No-Show Rate Cut by 80%</div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">📅</span>
+        <div class="sv-title">Appointment Booking + Reminders</div>
+        <p class="sv-desc">Auto confirmation, calendar sync, and smart reminders via WhatsApp or email. Works while you sleep, keeps your schedule full.</p>
+        <button class="sv-cta" onclick="openLead('Appointment Booking & Reminder Automation')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- 5. Sales Follow-up -->
+    <div class="sv-card rv d2">
+      <div class="sv-preview">
+        <div class="flow-w">
+          <div class="fl-node trig">💬 Proposal Sent to Prospect</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">🤖 AI Writes Follow-up Email</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node">📤 Auto-Sent: Day 2 → 5 → 10</div>
+          <div class="fl-arr fl-pulse"></div>
+          <div class="fl-node out">✅ More Deals Closed</div>
+        </div>
+      </div>
+      <div class="sv-body">
+        <span class="sv-icon">💰</span>
+        <div class="sv-title">Sales Follow-up Email Automation</div>
+        <p class="sv-desc">Never let a warm lead go cold. AI writes and sends perfectly-timed follow-up sequences on autopilot — so you close more without trying harder.</p>
+        <button class="sv-cta" onclick="openLead('Sales Follow-up Email Automation')">
+          <span class="sv-cta-txt">Add to My Business</span>
+          <span class="sv-cta-arrow">→</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Custom CTA card -->
+    <div class="sv-custom rv d3" onclick="openLead('Custom Workflow Automation')">
+      <div class="sv-custom-icon">🔧</div>
+      <div class="sv-custom-t">Need a <em>custom</em><br>automation?</div>
+      <p class="sv-custom-p">Got a repetitive process eating your time? I'll map it, automate it, and hand it back running on autopilot — permanently.</p>
+      <button class="sv-cta" style="width:auto;padding:11px 28px">
+        <span class="sv-cta-txt">Tell Me What You Need</span>
+        <span class="sv-cta-arrow">→</span>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════
+     LEAD MODAL
+══════════════════════════════════════ -->
+<div class="modal-ov" id="leadModal">
+  <div class="modal-box">
+    <button class="modal-close" id="modalClose">✕</button>
+
+    <div id="modalForm">
+      <div class="modal-top">
+        <span class="modal-tag">Let's Build This Together</span>
+        <div class="modal-h">Get your <em>free quote</em></div>
+        <div class="modal-svc" id="modalSvc">Service: —</div>
+      </div>
+      <div class="modal-body">
+        <div class="mf-row">
+          <div class="mf">
+            <label>Your Name *</label>
+            <input type="text" id="lName" placeholder="Rahul Sharma">
+          </div>
+          <div class="mf">
+            <label>Email *</label>
+            <input type="email" id="lEmail" placeholder="you@company.com">
+          </div>
+        </div>
+        <div class="mf-row">
+          <div class="mf">
+            <label>WhatsApp / Phone</label>
+            <input type="text" id="lPhone" placeholder="+91 98765 43210">
+          </div>
+          <div class="mf">
+            <label>Your Business</label>
+            <input type="text" id="lBiz" placeholder="Retail, SaaS, Agency...">
+          </div>
+        </div>
+        <div class="mf">
+          <label>Timeline</label>
+          <select id="lTimeline">
+            <option value="">Select timeline</option>
+            <option>ASAP — within a week</option>
+            <option>Within 2–4 weeks</option>
+            <option>1–2 months</option>
+            <option>Just exploring for now</option>
+          </select>
+        </div>
+        <div class="mf">
+          <label>Anything specific you want? (optional)</label>
+          <textarea id="lMsg" placeholder="Describe your use case, integrations needed, or any questions..."></textarea>
+        </div>
+        <button class="modal-submit" id="leadSubmit">⚡ Send My Request — Get Quote in 24hr</button>
+        <div class="modal-note">🔒 No spam ever &nbsp;·&nbsp; I respond personally within 24 hours</div>
+      </div>
+    </div>
+
+    <div class="modal-success" id="modalSuccess">
+      <div class="succ-icon">🎉</div>
+      <div class="succ-t">Request Sent!</div>
+      <p class="succ-msg">
+        I've got your details and will send a custom quote within <strong>24 hours</strong>.<br><br>
+        Or reach me directly right now:<br>
+        <strong>WhatsApp: +91-9839836510</strong><br>
+        <strong>Email: mahivermaa22@gmail.com</strong>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="exp-layout">
+    <div class="exp-sticky">
+      <div class="s-label rv">Background</div>
+      <h2 class="s-title rv d1">Experience &amp;<br><em>track record</em></h2>
+      <p class="rv d2">From internships to full-time engineering roles, I've shipped real code in real production environments.</p>
+    </div>
+    <div>
+      <div class="exp-row rv"><div class="exp-top"><span class="exp-co">WebSofy</span><span class="exp-period">Feb 2024 – May 2025</span></div><div class="exp-role">Web Developer · Full-Time · Remote</div><p class="exp-desc">Enhanced UI responsiveness and cross-browser compatibility. Resolved frontend &amp; backend issues, improved load performance, and managed production deployments and maintenance.</p></div>
+      <div class="exp-row rv d1"><div class="exp-top"><span class="exp-co">DigiMonk</span><span class="exp-period">Mar 2023 – Apr 2023</span></div><div class="exp-role">Web Developer · Internship · Remote</div><p class="exp-desc">Built and maintained responsive pages using HTML, CSS, JavaScript, and PHP. Collaborated with designers to convert UI/UX designs into functional cross-device interfaces.</p></div>
+      <div class="exp-row rv d2"><div class="exp-top"><span class="exp-co">Chegg</span><span class="exp-period">Apr 2023 – Jul 2024</span></div><div class="exp-role">Subject Matter Expert · Freelance · Remote</div><p class="exp-desc">Step-by-step solutions to complex Mathematics and Computer Science problems. High-quality, academically rigorous outputs at scale.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="s-label rv">Arsenal</div>
+  <h2 class="s-title rv d1">Skills &amp; <em>tools</em></h2>
+  <div class="skill-grid">
+    <div class="skill-g rv d1"><div class="skill-g-t">Languages</div><ul class="skill-ul"><li>Python</li><li>C++</li><li>JavaScript</li><li>SQL</li><li>Bash</li></ul></div>
+    <div class="skill-g rv d2"><div class="skill-g-t">AI / ML</div><ul class="skill-ul"><li>LangChain</li><li>TensorFlow/Keras</li><li>Scikit-learn</li><li>ChromaDB</li><li>ONNX Runtime</li></ul></div>
+    <div class="skill-g rv d3"><div class="skill-g-t">Web &amp; Data</div><ul class="skill-ul"><li>Streamlit</li><li>Pandas/NumPy</li><li>PostgreSQL/MySQL</li><li>React</li><li>HTML/CSS</li></ul></div>
+    <div class="skill-g rv d4"><div class="skill-g-t">Infrastructure</div><ul class="skill-ul"><li>Docker</li><li>AWS</li><li>Git/GitHub</li><li>Linux</li><li>SQLite</li></ul></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-text rv">
+      <div class="s-label">About Me</div>
+      <h2 class="s-title" style="margin-bottom:28px">One person.<br><em>Full capability.</em></h2>
+      <p>I'm <strong>Mahi Verma</strong> — an AI engineer and developer pursuing M.Tech in AI &amp; Data Analytics at NIT Durgapur.</p>
+      <p>I operate as a <strong>one-person agency</strong>: no middlemen, no over-staffed teams. When you work with me, you work with the person actually building your product.</p>
+      <blockquote class="pull-quote">"I don't just write code. I build things that make businesses run smarter."</blockquote>
+      <p>My strength is the intersection of <strong>AI engineering and product thinking</strong> — turning complex ML capabilities into practical tools that solve real problems.</p>
+    </div>
+    <div class="rv d2">
+      <div class="edu-card"><div class="edu-inst">NIT Durgapur</div><div class="edu-deg">M.Tech — Artificial Intelligence &amp; Data Analytics</div><div class="edu-yr">Aug 2025 – 2027</div></div>
+      <div class="edu-card"><div class="edu-inst">BBD Engineering College, Lucknow</div><div class="edu-deg">B.Tech — Computer Science</div><div class="edu-yr">Sep 2020 – Jun 2024</div></div>
+      <div class="status-card">
+        <div class="status-card-t">Current Status</div>
+        <div class="srow"><span class="dot-g"></span><span>Open to new client projects</span></div>
+        <div class="srow"><span class="dot-c"></span><span>Deepening LLM &amp; RAG expertise</span></div>
+        <div class="srow"><span class="dot-c"></span><span>Building AI products for global clients</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-glow"></div>
+  <div class="s-label rv" style="justify-content:center">Let's Connect</div>
+  <h2 class="contact-t rv d1">Let's build<br>something <em>great</em></h2>
+  <p class="contact-sub rv d2">Have a project in mind? I respond within 24 hours. Let's make it real.</p>
+  <div class="contact-links rv d3">
+    <a href="mailto:mahivermaa22@gmail.com" class="c-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m2 7 10 7 10-7"/></svg>
+      mahivermaa22@gmail.com
+    </a>
+    <a href="tel:+919839836510" class="c-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 015.19 12.9 19.79 19.79 0 012.12 4.27 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+      +91-9839836510
+    </a>
+    <a href="https://linkedin.com" target="_blank" class="c-link">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+      LinkedIn
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 <span>Mahi Verma</span>. All rights reserved.</p>
+  <p>AI Engineer · <span>mahivermaa22@gmail.com</span></p>
+  <p>Made with <span>♦</span> precision</p>
+</footer>
+
+<script>
+// ── CURSOR ──
+var cDot=document.getElementById('cDot'),cRing=document.getElementById('cRing');
+var mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cDot.style.left=mx+'px';cDot.style.top=my+'px';});
+(function animR(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;cRing.style.left=rx+'px';cRing.style.top=ry+'px';requestAnimationFrame(animR);})();
+document.querySelectorAll('a,button,.svc-card,.proj-card,.exp-row,.edu-card,.sv-card,.sv-custom').forEach(function(el){
+  el.addEventListener('mouseenter',function(){document.body.classList.add('hov');});
+  el.addEventListener('mouseleave',function(){document.body.classList.remove('hov');});
+});
+
+// ── NAV ──
+var navEl=document.getElementById('nav');
+window.addEventListener('scroll',function(){navEl.classList.toggle('scrolled',window.scrollY>40);});
+
+var sects=document.querySelectorAll('section[id]');
+var nLinks=document.querySelectorAll('.nav-links a');
+new IntersectionObserver(function(entries){
+  entries.forEach(function(e){if(e.isIntersecting){nLinks.forEach(function(l){l.classList.remove('active');});var l=document.querySelector('.nav-links a[href="#'+e.target.id+'"]');if(l)l.classList.add('active');}});
+},{threshold:.3}).observe && sects.forEach(function(s){new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){nLinks.forEach(function(l){l.classList.remove('active');});var l=document.querySelector('.nav-links a[href="#'+s.id+'"]');if(l)l.classList.add('active');}});},{threshold:.3}).observe(s);});
+
+// ── HAMBURGER ──
+var ham=document.getElementById('ham'),mob=document.getElementById('mobMenu');
+ham.addEventListener('click',function(){ham.classList.toggle('open');mob.classList.toggle('open');});
+document.querySelectorAll('.ml').forEach(function(l){l.addEventListener('click',function(){ham.classList.remove('open');mob.classList.remove('open');});});
+
+// ── SMOOTH SCROLL ──
+document.querySelectorAll('a[href^="#"]').forEach(function(a){
+  a.addEventListener('click',function(e){var t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'});}});
+});
+
+// ── REVEAL ──
+var rvObs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('vis');rvObs.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.rv').forEach(function(r){rvObs.observe(r);});
+
+// ── PROJECT CAROUSEL ──
+var pTrack=document.getElementById('pTrack');
+var pCards=document.querySelectorAll('.proj-card');
+var pDots=document.querySelectorAll('.pdot');
+var pCur=0;
+function goTo(i){
+  pCur=Math.max(0,Math.min(i,pCards.length-1));
+  var w=window.innerWidth<768?324:524;
+  pTrack.style.transform='translateX(-'+(pCur*w)+'px)';
+  pDots.forEach(function(d,j){d.classList.toggle('active',j===pCur);});
+}
+document.getElementById('pNext').addEventListener('click',function(){goTo(pCur+1);});
+document.getElementById('pPrev').addEventListener('click',function(){goTo(pCur-1);});
+pDots.forEach(function(d){d.addEventListener('click',function(){goTo(parseInt(d.dataset.i));});});
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight')goTo(pCur+1);if(e.key==='ArrowLeft')goTo(pCur-1);});
+var tsX=0;
+pTrack.addEventListener('touchstart',function(e){tsX=e.touches[0].clientX;},{passive:true});
+pTrack.addEventListener('touchend',function(e){var dx=tsX-e.changedTouches[0].clientX;if(Math.abs(dx)>45)goTo(dx>0?pCur+1:pCur-1);});
+setInterval(function(){goTo(pCur<pCards.length-1?pCur+1:0);},5500);
+
+// ── CATEGORY SWITCH ──
+var catBtns=document.querySelectorAll('.cat-btn');
+catBtns.forEach(function(btn){
+  btn.addEventListener('click',function(){
+    catBtns.forEach(function(b){b.classList.remove('on');});
+    btn.classList.add('on');
+    document.querySelectorAll('.showcase-grid').forEach(function(g){g.classList.remove('on');});
+    var grid=document.getElementById('cat-'+btn.dataset.cat);
+    if(grid){
+      grid.classList.add('on');
+      // Re-observe newly visible rv elements
+      grid.querySelectorAll('.rv:not(.vis)').forEach(function(r){rvObs.observe(r);});
+    }
+  });
+});
+
+// ── CHAT ANIMATIONS ──
+function animChat(id){
+  var msgs=document.querySelectorAll('#'+id+' .cm');
+  msgs.forEach(function(m,i){setTimeout(function(){m.classList.add('show');},i*750+200);});
+}
+var chatIds=['c1','c2','c3','c4','c5'];
+chatIds.forEach(function(id){
+  var el=document.getElementById(id);
+  if(!el) return;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){if(e.isIntersecting){animChat(id);obs.unobserve(e.target);}});
+  },{threshold:.4});
+  obs.observe(el);
+});
+
+// ── LEAD MODAL ──
+var activeService='';
+function openLead(svc){
+  activeService=svc;
+  document.getElementById('modalSvc').innerHTML='Service: <b>'+svc+'</b>';
+  document.getElementById('modalForm').style.display='';
+  document.getElementById('modalSuccess').style.display='none';
+  document.getElementById('modalSuccess').classList.remove('show');
+  ['lName','lEmail','lPhone','lBiz','lMsg'].forEach(function(id){var el=document.getElementById(id);if(el){el.value='';el.classList.remove('err');}});
+  document.getElementById('lTimeline').value='';
+  document.getElementById('leadModal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLead(){
+  document.getElementById('leadModal').classList.remove('open');
+  document.body.style.overflow='';
+}
+document.getElementById('modalClose').addEventListener('click',closeLead);
+document.getElementById('leadModal').addEventListener('click',function(e){if(e.target===this)closeLead();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeLead();});
+
+document.getElementById('leadSubmit').addEventListener('click',function(){
+  var name=document.getElementById('lName').value.trim();
+  var email=document.getElementById('lEmail').value.trim();
+  var nameEl=document.getElementById('lName');
+  var emailEl=document.getElementById('lEmail');
+  nameEl.classList.remove('err');emailEl.classList.remove('err');
+  var ok=true;
+  if(!name){nameEl.classList.add('err');ok=false;}
+  if(!email||email.indexOf('@')<0){emailEl.classList.add('err');ok=false;}
+  if(!ok) return;
+
+  var phone=document.getElementById('lPhone').value.trim();
+  var biz=document.getElementById('lBiz').value.trim();
+  var timeline=document.getElementById('lTimeline').value;
+  var msg=document.getElementById('lMsg').value.trim();
+
+  var subject=encodeURIComponent('[Portfolio Lead] '+activeService+' — '+name);
+  var body=encodeURIComponent(
+    'New client enquiry from your portfolio website\n\n'+
+    'SERVICE: '+activeService+'\n'+
+    'NAME: '+name+'\n'+
+    'EMAIL: '+email+'\n'+
+    'WHATSAPP/PHONE: '+(phone||'—')+'\n'+
+    'BUSINESS: '+(biz||'—')+'\n'+
+    'TIMELINE: '+(timeline||'—')+'\n'+
+    'MESSAGE:\n'+(msg||'No additional message.')+'\n\n'+
+    '— Sent from mahiverma.in portfolio'
+  );
+  window.location.href='mailto:mahivermaa22@gmail.com?subject='+subject+'&body='+body;
+
+  setTimeout(function(){
+    document.getElementById('modalForm').style.display='none';
+    var s=document.getElementById('modalSuccess');
+    s.style.display='block';
+    s.classList.add('show');
+  },500);
+});
+</script>
+</body>
+</html>
